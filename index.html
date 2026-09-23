@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รักเค้ามั้ยยย</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
+    body { 
+      background-color: #fce4ec; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      padding: 20px; 
+      overflow: hidden; 
+    }
+    .card { 
+      background: transparent; 
+      width: 100%; 
+      max-width: 400px; 
+      text-align: center; 
+      position: relative;
+    }
+    .img-container { 
+      width: 220px; 
+      height: 220px; 
+      margin: 0 auto 16px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+    .img-container img { 
+      max-width: 100%; 
+      max-height: 100%; 
+      object-fit: contain; 
+    }
+    .title { 
+      font-size: 22px; 
+      color: #333; 
+      font-weight: bold; 
+      margin-bottom: 24px; 
+    }
+    .btn-group { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 15px; 
+      min-height: 80px;
+    }
+    .btn { 
+      padding: 10px 24px; 
+      border-radius: 20px; 
+      border: none; 
+      font-size: 16px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      transition: top 0.2s ease, left 0.2s ease; 
+      /* ลบ transform เพื่อคงขนาดปุ่มให้เท่าเดิม */
+    }
+    .btn-yes { 
+      background-color: #a8e6cf; 
+      color: #2e7d32; 
+      z-index: 10;
+    }
+    .btn-no { 
+      background-color: #ff8b94; 
+      color: white; 
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="img-container">
+      <img id="capooImg" src="https://media.tenor.com/Gp2PDF56kYcAAAAm/capoo-cat.webp" alt="Capoo">
+    </div>
+    <h2 id="mainTitle" class="title">รักเค้ามั้ยยย</h2>
+    
+    <div class="btn-group" id="btnGroup">
+      <button id="yesBtn" class="btn btn-yes" onclick="acceptLove()">รักก็ได้</button>
+      <button id="noBtn" class="btn btn-no" onclick="refuseLove()">ไม่รัก</button>
+    </div>
+  </div>
+
+  <script>
+    // รูป GIF เปลี่ยนตอนกดไม่รัก
+    const cryGifs = [
+      "https://media.tenor.com/ML8iuahL1YAAAAAm/manhphongg.webp",
+      "https://media.tenor.com/FCYXArk5DNYAAAAm/capoo-bugcat.webp",
+      "https://media.tenor.com/BMj-yG8QvY4AAAAm/%E0%B9%80%E0%B8%A8%E0%B8%A3%E0%B9%89%E0%B8%B2-cry.webp"
+    ];
+    
+    // รูป GIF ตอนตกลงรัก
+    const happyCapooImg = "https://media.tenor.com/g9Giuumkl7kAAAAm/tkthao219-capoo.webp";
+
+    // ชุดคำพูดอ้อนบนปุ่ม "รัก..." ที่จะเปลี่ยนไปเรื่อยๆ ทั้งหมด 10 ลำดับ
+    const loveTexts = [
+      "รักหน่อยน้า 🥺",
+      "รักเค้าเถอะน้าา 💕",
+      "รักเถอะนะ นะๆๆ 🥺",
+      "รักใช่มั้ยยย?",
+      "รักแน่ๆ รู้นะ! ",
+      "รักเค้าๆๆๆ ❤️",
+      "รักกเถอะะะ ขอร้องง",
+      "อย่าใจร้ายเลย รักหน่อยย 💖",
+      "แน่ใจหรอจะไม่รัก? 🥺",
+      " รักก็ได้ "
+    ];
+
+    let clickCount = 0; // ตัวนับจำนวนครั้งที่กด "ไม่รัก"
+    let currentGifIndex = 0;
+
+    function refuseLove() {
+      clickCount++;
+      const noBtn = document.getElementById('noBtn');
+      const yesBtn = document.getElementById('yesBtn');
+
+      // 1. เปลี่ยนรูป GIF
+      document.getElementById('capooImg').src = cryGifs[currentGifIndex];
+      currentGifIndex = (currentGifIndex + 1) % cryGifs.length;
+
+      // 2. เปลี่ยนข้อความปุ่ม "รักก็ได้" ตามลำดับการกด
+      if (clickCount <= loveTexts.length) {
+        yesBtn.innerText = loveTexts[clickCount - 1];
+      }
+
+      // 3. ตรวจสอบเงื่อนไขการกดครบ 10 รอบ
+      if (clickCount >= 10) {
+        // ครบ 10 รอบแล้ว -> ซ่อนปุ่มไม่รักทิ้งไปเลย
+        noBtn.style.display = 'none';
+      } else {
+        // ยังไม่ครบ 10 รอบ -> ย้ายตำแหน่งสุ่มปุ่มไม่รัก
+        noBtn.style.position = 'fixed';
+        const randomX = Math.random() * (window.innerWidth - 120);
+        const randomY = Math.random() * (window.innerHeight - 60);
+
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+      }
+    }
+
+    function acceptLove() {
+      document.getElementById('capooImg').src = happyCapooImg;
+      document.getElementById('mainTitle').innerText = "เค้าก็รักอ้วนมากๆ รักที่สุดในจักรวาลเลยย 🥺💖";
+      document.getElementById('btnGroup').style.display = 'none';
+      document.getElementById('noBtn').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+
