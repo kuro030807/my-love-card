@@ -3,148 +3,255 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>รักเค้ามั้ยยย</title>
+  <title>ง้อแฟน 🥺</title>
+  <!-- ดึงไลบรารี anime.js สำหรับทำอนิเมชันการเคลื่อนที่ขยับหนีว่องไว -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kanit', sans-serif; }
-    body { 
-      background-color: #fce4ec; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 100vh; 
-      padding: 20px; 
-      overflow: hidden; 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Kanit', sans-serif;
     }
-    .card { 
-      background: transparent; 
-      width: 100%; 
-      max-width: 400px; 
-      text-align: center; 
+    body {
+      background-color: #fce4ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 450px;
+      padding: 35px 25px;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+      text-align: center;
       position: relative;
     }
-    .img-container { 
-      width: 220px; 
-      height: 220px; 
-      margin: 0 auto 16px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
+    .img-container {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .img-container img { 
-      max-width: 100%; 
-      max-height: 100%; 
-      object-fit: contain; 
+    .img-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
-    .title { 
-      font-size: 22px; 
-      color: #333; 
-      font-weight: bold; 
-      margin-bottom: 24px; 
+    .title {
+      font-size: 24px;
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 12px;
+      line-height: 1.3;
     }
-    .btn-group { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      gap: 15px; 
-      min-height: 80px;
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 24px;
+      line-height: 1.5;
+      min-height: 48px;
     }
-    .btn { 
-      padding: 10px 24px; 
-      border-radius: 20px; 
-      border: none; 
-      font-size: 16px; 
-      font-weight: bold; 
-      cursor: pointer; 
-      transition: top 0.2s ease, left 0.2s ease; 
-      /* ลบ transform เพื่อคงขนาดปุ่มให้เท่าเดิม */
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      min-height: 60px;
     }
-    .btn-yes { 
-      background-color: #a8e6cf; 
-      color: #2e7d32; 
+    .btn {
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      touch-action: manipulation;
+    }
+    .btn-yes {
+      background-color: #f8bbd0;
+      color: #c2185b;
       z-index: 10;
     }
-    .btn-no { 
-      background-color: #ff8b94; 
-      color: white; 
-      z-index: 10;
+    .btn-yes:hover {
+      background-color: #f48fb1;
+    }
+    .btn-no {
+      background-color: #f0f0f0;
+      color: #757575;
+      z-index: 100;
+      position: relative;
     }
   </style>
 </head>
 <body>
+
   <div class="card">
     <div class="img-container">
       <img id="capooImg" src="https://media.tenor.com/Gp2PDF56kYcAAAAm/capoo-cat.webp" alt="Capoo">
     </div>
-    <h2 id="mainTitle" class="title">รักเค้ามั้ยยย</h2>
-    
+   
+    <h2 id="mainTitle" class="title">ที่รัก...ยกโทษให้เค้าได้ไหม ?</h2>
+    <p id="subTitle" class="subtitle">เค้ารู้ว่าครั้งนี้เค้าผิด แต่อยากขอโอกาสอีกครั้งจริงๆ นะ</p>
+   
     <div class="btn-group" id="btnGroup">
-      <button id="yesBtn" class="btn btn-yes" onclick="acceptLove()">รักก็ได้</button>
-      <button id="noBtn" class="btn btn-no" onclick="refuseLove()">ไม่รัก</button>
+      <button id="yesBtn" class="btn btn-yes" onclick="acceptApology()">🌸 ยกโทษ</button>
+      <button id="noBtn" class="btn btn-no" onclick="refuseApology()">❌ ไม่ยกโทษ</button>
     </div>
   </div>
 
   <script>
-    // รูป GIF เปลี่ยนตอนกดไม่รัก
-    const cryGifs = [
-      "https://media.tenor.com/ML8iuahL1YAAAAAm/manhphongg.webp",
-      "https://media.tenor.com/FCYXArk5DNYAAAAm/capoo-bugcat.webp",
-      "https://media.tenor.com/BMj-yG8QvY4AAAAm/%E0%B9%80%E0%B8%A8%E0%B8%A3%E0%B9%89%E0%B8%B2-cry.webp"
+    const steps = [
+      {
+        gif: "https://media.tenor.com/ML8iuahL1YAAAAAm/manhphongg.webp",
+        title: "แน่ใจเหรอ...ไม่ใจอ่อนจริงๆ เหรอ 🥺",
+        subtitle: "เค้าสัญญาว่าจะตั้งใจฟัง และไม่ทำให้เธอเสียใจแบบนี้อีกแล้ว",
+        yesText: "🌸 เริ่มใจอ่อนแล้วนะ",
+        noText: "❌ ยังไม่ยกโทษ"
+      },
+      {
+        gif: "https://media.tenor.com/FCYXArk5DNYAAAAm/capoo-bugcat.webp",
+        title: "เค้าง้อจริงๆ นะ...ง้อสุดหัวใจเลย",
+        subtitle: "ไม่มีข้อแก้ตัวอะไรเลย มีแต่ความรู้สึกผิดกับความรักที่อยากดูแลเธอให้ดีกว่านี้",
+        yesText: "🌸 ยกโทษให้ก็ได้...",
+        noText: "❌ ยังงอนอยู่"
+      },
+      {
+        gif: "https://media.tenor.com/BMj-yG8QvY4AAAAm/%E0%B9%80%E0%B8%A8%E0%B8%A3%E0%B9%89%E0%B8%B2-cry.webp",
+        title: "ถ้ายังไม่ยกโทษ เค้าก็จะง้อต่อ!",
+        subtitle: "เพราะเค้าไม่อยากเสียเธอไป และไม่อยากเดินต่อโดยไม่มีมือคู่นี้",
+        yesText: "🌸 โอเค...ยกโทษให้ก็ได้",
+        noText: "❌ ยังไม่!!!"
+      },
+      {
+        gif: "https://media.tenor.com/ML8iuahL1YAAAAAm/manhphongg.webp",
+        title: "ยอมแล้วก็ได้...แต่รักเธอจริงๆ นะ 💕",
+        subtitle: "ต่อให้โดนกดไม่ยกโทษกี่รอบ เค้าก็อยากง้อเธอคนเดิมอยู่ดี",
+        yesText: "🌸 ยกโทษให้เค้า",
+        noText: "❌ ไม่เอาหรอก"
+      },
+      {
+        gif: "https://media.tenor.com/Gp2PDF56kYcAAAAm/capoo-cat.webp",
+        title: "โอมมม...จงใจอ่อน จงใจอ่อน ✨",
+        subtitle: "เค้ารู้ว่าเธอเจ็บ แต่เค้าอยากตั้งใจแก้ไขมันจริงๆ นะครับ",
+        yesText: "🌸 ใจอ่อนนิดนึงแล้ว",
+        noText: "❌ ยังไม่หลงกล"
+      },
+      {
+        gif: "https://media.tenor.com/FCYXArk5DNYAAAAm/capoo-bugcat.webp",
+        title: "เค้ารักเธอนะ...รักมากๆ เลย 💖",
+        subtitle: "ไม่มีวันไหนที่ไม่คิดถึง และไม่มีวันไหนที่ไม่เสียใจกับเรื่องที่เกิดขึ้น",
+        yesText: "🌸 ยกโทษให้แล้วกัน",
+        noText: "❌ ยังไม่หายโกรธ"
+      },
+      {
+        gif: "https://media.tenor.com/BMj-yG8QvY4AAAAm/%E0%B9%80%E0%B8%A8%E0%B8%A3%E0%B9%89%E0%B8%B2-cry.webp",
+        title: "อย่าใจร้ายเลยน้าาา...ตาบวมหมดแล้ว 😭",
+        subtitle: "ขอโอกาสให้เค้าได้พิสูจน์ตัวเองอีกสักครั้งนะครับ",
+        yesText: "🌸 ยกโทษให้น้า",
+        noText: "❌ ไม่ใจอ่อนหรอก"
+      },
+      {
+        gif: "https://media.tenor.com/ML8iuahL1YAAAAAm/manhphongg.webp",
+        title: "ยังไม่ยอมจริงๆ เหรอเนี่ย 🥺",
+        subtitle: "แต่ไม่เป็นไร เค้าพร้อมจะง้อเธอไปเรื่อยๆ จนกว่าเธอจะยิ้มได้",
+        yesText: "🌸 แอบยิ้มละ ยกโทษให้",
+        noText: "❌ ยังไม่ยิ้ม!"
+      },
+      {
+        gif: "https://media.tenor.com/FCYXArk5DNYAAAAm/capoo-bugcat.webp",
+        title: "จะกดไม่ยกโทษอีกกี่รอบ เค้าก็รักเธอ 💓",
+        subtitle: "ให้เค้าได้ดูแลและรักษาหัวใจของเธออีกครั้งนะ",
+        yesText: "🌸 ยกโทษให้จริงๆ แล้ว",
+        noText: "❌ กดอีกรอบซิ!"
+      },
+      {
+        gif: "https://media.tenor.com/BMj-yG8QvY4AAAAm/%E0%B9%80%E0%B8%A8%E0%B8%A3%E0%B9%89%E0%B8%B2-cry.webp",
+        title: "กดครบ 10 รอบแล้วน้าาา! 💨",
+        subtitle: "ทีนี้ปุ่มไม่ยกโทษจะวิ่งหนีแล้ว! แตะไม่ได้แล้วนะ ต้องกดยกโทษเท่านั้น!",
+        yesText: "🌸 ยอมยกโทษให้ก็ได้! 💕",
+        noText: "❌ จะแตะอันนี้ให้ได้!"
+      }
     ];
-    
-    // รูป GIF ตอนตกลงรัก
-    const happyCapooImg = "https://media.tenor.com/g9Giuumkl7kAAAAm/tkthao219-capoo.webp";
 
-    // ชุดคำพูดอ้อนบนปุ่ม "รัก..." ที่จะเปลี่ยนไปเรื่อยๆ ทั้งหมด 10 ลำดับ
-    const loveTexts = [
-      "รักหน่อยน้า 🥺",
-      "รักเค้าเถอะน้าา 💕",
-      "รักเถอะนะ นะๆๆ 🥺",
-      "รักใช่มั้ยยย?",
-      "รักแน่ๆ รู้นะ! ",
-      "รักเค้าๆๆๆ ❤️",
-      "รักกเถอะะะ ขอร้องง",
-      "อย่าใจร้ายเลย รักหน่อยย 💖",
-      "แน่ใจหรอจะไม่รัก? 🥺",
-      " รักก็ได้ "
-    ];
+    const happyGif = "https://media.tenor.com/g9Giuumkl7kAAAAm/tkthao219-capoo.webp";
+    let currentStep = 0;
+    let clickCount = 0;
 
-    let clickCount = 0; // ตัวนับจำนวนครั้งที่กด "ไม่รัก"
-    let currentGifIndex = 0;
+    const noBtn = document.getElementById('noBtn');
 
-    function refuseLove() {
+    function refuseApology() {
       clickCount++;
-      const noBtn = document.getElementById('noBtn');
       const yesBtn = document.getElementById('yesBtn');
 
-      // 1. เปลี่ยนรูป GIF
-      document.getElementById('capooImg').src = cryGifs[currentGifIndex];
-      currentGifIndex = (currentGifIndex + 1) % cryGifs.length;
-
-      // 2. เปลี่ยนข้อความปุ่ม "รักก็ได้" ตามลำดับการกด
-      if (clickCount <= loveTexts.length) {
-        yesBtn.innerText = loveTexts[clickCount - 1];
-      }
-
-      // 3. ตรวจสอบเงื่อนไขการกดครบ 10 รอบ
-      if (clickCount >= 10) {
-        // ครบ 10 รอบแล้ว -> ซ่อนปุ่มไม่รักทิ้งไปเลย
-        noBtn.style.display = 'none';
-      } else {
-        // ยังไม่ครบ 10 รอบ -> ย้ายตำแหน่งสุ่มปุ่มไม่รัก
-        noBtn.style.position = 'fixed';
-        const randomX = Math.random() * (window.innerWidth - 120);
-        const randomY = Math.random() * (window.innerHeight - 60);
-
-        noBtn.style.left = `${randomX}px`;
-        noBtn.style.top = `${randomY}px`;
+      if (currentStep < steps.length) {
+        const data = steps[currentStep];
+        document.getElementById('capooImg').src = data.gif;
+        document.getElementById('mainTitle').innerText = data.title;
+        document.getElementById('subTitle').innerText = data.subtitle;
+        yesBtn.innerHTML = data.yesText;
+        noBtn.innerHTML = data.noText;
+        currentStep++;
       }
     }
 
-    function acceptLove() {
-      document.getElementById('capooImg').src = happyCapooImg;
-      document.getElementById('mainTitle').innerText = "เค้าก็รักเทอมากๆๆๆเลยนะ ห้ามหายไปไหนนะเข้าใจมั้ย รักที่สุดในจักรวาลเลยย 🥺💖";
+    // ฟังก์ชันสั่งปุ่มสไลด์หลบด้วยความเร็วสูง
+    function moveButtonFast() {
+      if (clickCount >= 10) {
+        noBtn.style.position = 'fixed';
+        
+        const padding = 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+        const randomX = Math.max(padding, Math.random() * maxX);
+        const randomY = Math.max(padding, Math.random() * maxY);
+
+        anime({
+          targets: noBtn,
+          left: `${randomX}px`,
+          top: `${randomY}px`,
+          duration: 150, // ความเร็วในการสไลด์หนี (150ms ไวแต่เห็นอนิเมชันลื่นตา)
+          easing: 'easeOutQuad'
+        });
+      }
+    }
+
+    // บนมือถือ: สั่งหนีทันที 0ms ที่สัมผัสโดนผิวปุ่ม (ยับยั้งคำสั่งคลิก)
+    noBtn.addEventListener('touchstart', (e) => {
+      if (clickCount >= 10) {
+        e.preventDefault();
+        moveButtonFast();
+      }
+    }, { passive: false });
+
+    // บนคอมพิวเตอร์/โน้ตบุ๊ก: สั่งหนีทันทีที่เมาส์เลื่อนมาโดน
+    noBtn.addEventListener('mouseover', () => {
+      if (clickCount >= 10) {
+        moveButtonFast();
+      }
+    });
+
+    function acceptApology() {
+      document.getElementById('capooImg').src = happyGif;
+      document.getElementById('mainTitle').innerText = "ขอบคุณที่ยกโทษให้เค้านะ 💕";
+      document.getElementById('subTitle').innerHTML = `
+        เค้าอาจไม่ใช่คนดีที่สมบูรณ์แบบ แต่จะเป็นคนรักที่รักเธอให้ดีที่สุด<br>
+        จากนี้เค้าจะระวังหัวใจของที่รักมากกว่านี้และไม่ปล่อยให้ต้องเสียใจง่ายๆ อีกแล้ว 💞<br><br>
+        <strong>รักนะ และอยากจับมือไปด้วยกันต่อ</strong>
+      `;
       document.getElementById('btnGroup').style.display = 'none';
-      document.getElementById('noBtn').style.display = 'none';
+      noBtn.style.display = 'none';
     }
   </script>
 </body>
